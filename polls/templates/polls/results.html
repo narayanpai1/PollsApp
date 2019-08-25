@@ -1,0 +1,69 @@
+{% extends 'polls/base.html' %}
+{% load extras %}
+{% load static %}
+
+{% block content %}
+	<!-- To show that the test is given -->
+	<center>
+		<!--Tickmark image-->
+		<img src="{% static 'polls/tickmark.png' %}" width="65"></img>
+		<h4>Test given</h4>
+	</center>
+
+	<!-- Loop through all the questions of the given quiz -->
+	{% for i in q_a %}
+
+		<!--Bootstrapped div for responsive layout -->
+		<div class="col-md-3">
+			<h4><strong>Q </strong>{{i.question.question_text}}</h4>
+
+			<!-- to_percent is django filter to provide percent given count and total count -->
+			<!--OPTION 1-->
+			{% with i.question.option_1_chosen|to_percent:i.total as percent %}
+				<strong>
+					 &nbsp;{{i.question.option_1}}
+						{% if i.answer.input_answer is 1 %}
+							(YOUR ANSWER)
+						{% endif %}
+					</strong>
+				<span class="pull-right">{{percent}}%</span>
+
+				<!--progress bar-->
+				<div class="progress progress-danger active">
+					<div class="bar" style="width:{{percent}}%;">
+					</div>
+				</div>
+			{% endwith %}
+
+			<!--OPTION 2-->
+			{% with i.question.option_2_chosen|to_percent:i.total as percent %}
+				<strong>
+					 &nbsp;{{i.question.option_2}}
+					{% if i.answer.input_answer is 2 %}
+						(YOUR ANSWER)
+					{% endif %}
+				</strong>
+				<span class="pull-right">{{percent}}%</span>
+				<div class="progress progress-danger active">
+					<div class="bar" style="width:{{percent}}%;">
+					</div>
+				</div>
+			{% endwith %}
+
+			<!--OPTION 3-->
+			{% with i.question.option_3_chosen|to_percent:i.total as percent %}
+				<strong>
+					 &nbsp;{{i.question.option_3}}
+					{% if i.answer.input_answer is 3 %}
+						(YOUR ANSWER)
+					{% endif %}
+				</strong>
+				<span class="pull-right">{{percent}}%</span>
+				<div class="progress progress-danger active">
+					<div class="bar" style="width:{{percent}}%;">
+					</div>
+				</div>
+			{% endwith %}
+		</div>
+	{% endfor %}
+{% endblock %}

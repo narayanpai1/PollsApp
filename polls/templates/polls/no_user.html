@@ -1,0 +1,16 @@
+{% extends 'polls/base.html' %}
+{% load static %}
+{% block content %}
+	<center>
+
+		<!--Sad image-->
+		<img src="{% static 'polls/sad.jpg' %}" width="50"></img>
+
+		<!--To provide link to log-in-->
+		<h4>
+		You have to login first
+		<br>
+		<a href="{% url 'SignIn:login' %}">Click here</a> to login
+		</h4>
+	</center>
+{% endblock %}

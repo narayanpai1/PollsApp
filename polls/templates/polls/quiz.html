@@ -1,0 +1,76 @@
+{% extends 'polls/base.html' %}
+{% load extras %}
+{% block head_content %}
+    <style type="text/css">
+        body { margin-top:20px; }
+        .panel-body:not(.two-col) { padding:0px }
+        .glyphicon { margin-right:5px; }
+        .glyphicon-new-window { margin-left:5px; }
+        .panel-body .radio,.panel-body .checkbox {margin-top: 0px;margin-bottom: 0px;}
+        .panel-body .list-group {margin-bottom: 0;}
+        .margin-bottom-none { margin-bottom: 0; }
+        .panel-body .radio label,.panel-body .checkbox label { display:block; }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <!--If any messages like not attempting all the questions, show all of them-->
+    {% if messages %}
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    {% endif %}
+
+    <!--Form having all the questions with each questions under their fieledset-->
+    <form action="" method="post">
+        {% csrf_token %}
+        <!--Loop through all the questions-->
+        {% for quest in question %}
+
+        <!--Each question comes under a filedset to limit the scope of options to their respective question-->
+        <fieldset id="question{{quest.id}}">
+
+            <!--Bootstrapped div for responsive layout -->
+            <div class="col-md-3">
+                
+                <!--Bootstap class for a box with title and body-->
+                <div class="panel panel-primary">
+                    <!--Blue colored top by bootstrap -->
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <span class="glyphicon glyphicon-arrow-right"></span>
+                            {{quest.question_text}}
+                        </h3>
+                    </div>
+
+                    <!--Body of the box-->
+                    <div class="panel-body">
+                        <!--List containing all the options-->
+                        <ul class="list-group">
+
+                            <!-- respective_field is a template tag returning form for a given question from forms.py-->
+                            {% with form|respective_field:quest.id as respective_field %}
+
+                            <!--Loop through all field choices -->
+                            {% for value, text in respective_field.field.choices %}
+                                <li class="list-group-item">
+                                <div class="radio">
+                                    <label>
+                                        <!--Be careful of value and label as it is used to retrieve input from form-->
+                                        <input type="radio" name="question{{quest.id}}" value="{{value}}" label="question{{quest.id}}">
+                                         {{text}}
+                                    </label>
+                                </div>
+                                </li>
+                            {% endfor %}
+                            {% endwith %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'polls/base.html' %}
+{% block content %}
+
+	<!--Only if user is not logged in, render the signin form -->
+	{% if not user.is_authenticated %}
+
+		<!--sign-in form-->
+		<form method="post">
+			{% csrf_token %}
+			{{form.as_p}}
+			<button type="submit">Login</button>
+		</form>
+	{% else %}
+
+		<!--Prompt the user he is already logged in-->
+		<center>
+			<h4>You are already logged in!</h4>
+			<br>
+			<h5>
+				<!--Link to polls page-->
+				<a href="{% url 'polls:quiz_home' %}">Click here</a>
+				to continue
+			</h5>
+		</center>
+	{% endif %}
+
+{% endblock %}

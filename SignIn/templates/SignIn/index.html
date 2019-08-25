@@ -1,0 +1,52 @@
+{% extends 'polls/base.html' %}
+{% block content %}
+	<h2><center>Welcome to POLLS APP!<center></h2>
+
+	<!--If there are any messages(like account creation successful), show all of them-->
+	{% if messages %}
+		{% for message in messages %}
+			{{message}}
+		{% endfor %}
+	{% endif %}
+
+	<!--Only if user is not logged in, render the login form-->
+	{% if not user.is_authenticated %}
+		<div style="background-color:wheat">
+			<h3>Login</h3>
+
+			<!--Login form-->
+			<form method="post">
+				{% csrf_token %}
+				{{form.as_p}}
+				<button type="submit">Login</button>
+			</form>
+			<br>
+
+			You can also login through
+			<!--Github OAuth login-->
+			<a href="{% url 'social:begin' 'github' %}">
+				<button>
+				Github
+				</button>
+			</a>
+		</div>
+
+		<!--link for signin page-->
+		<div>
+			If you do not have an account <a href="/signin">click here</a> to sign up
+		</div>
+
+	<!--if the user is already logged in-->
+	{% else %}
+		<center>
+			<h4>You are already logged in!</h4>
+			<br>
+
+			<!--polls page-->
+			<h5>
+				<a href="{% url 'polls:quiz_home' %}">Click here</a>
+				to continue
+			</h5>
+		</center>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,94 @@
+<!--base html for all the pages in the project-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{title}}</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Bootstrap 2 for some specs -->
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+
+    <!-- Bootstrap 3 for some specs xD -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+    <style>
+        .jumbotron
+        {
+            background-color: #f4511e;
+            color: #ffffff;
+            margin-bottom: 0;
+        }
+        .errorlist{
+			color:red;
+		}
+
+        body
+        {
+            font-family: Arial, Helvetica, sans-serif; /* Specifying several fonts in case some of the fonts aren't available in the user's browser */
+            padding:0px;
+        }
+
+        .css-jumbotron
+        {
+            width: 100%;
+            height: 220px;
+            padding: 20px;
+            background-color: #f4511e;
+            color: #ffffff;
+            margin-bottom: 0;
+        }
+
+        .css-jumbotron h1
+        {
+            font-size: 48px;
+        }
+
+        .css-jumbotron p
+        {
+            font-size: 27px;
+        }
+        #navig{
+            height:45px;text-size:20px;color:white;border-radius:0px;margin:0px;
+        }
+    </style>
+
+    <!--Block to add tags in head such as css, links-->
+    {% block head_content %}
+
+    {% endblock %}
+</head>
+
+<body>
+    <!--Top black navigation bar from bootstrap-->
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark" id="navig">
+        
+        <!--If user is authenticated, show his username and also show a link to logout in the navigation bar-->
+        {% if user.is_authenticated %}
+            {{user}} &nbsp;&nbsp;&nbsp;
+            <a class="navbar-brand" style="margin-right:auto;margin-left:30px;" href="{% url 'polls:quiz_home' %}">Home</a>
+            <a class="navbar-brand" style="margin-left:auto;margin-right:10px;" href="{% url 'logout' %}">Logout</a>
+        {% endif %}
+    </nav>
+
+    <!-- BootStrap's jumbotron class for big titles-->
+    <div class="jumbotron jumbotron-fluid text-center">
+        <div class="container">
+            <h1>POLLS</h1>
+        </div>
+    </div>
+    <br>
+
+    {% block content %}
+
+    {% endblock %}    
+
+</body>
