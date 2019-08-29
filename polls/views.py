@@ -68,7 +68,7 @@ def question_view(request, quiz_id):
     form_fields = []
     for q in question:
         form_fields.append("question" + str(q.id))
-    
+
     context = {'question': question, 'form': form, 'form_fields': form_fields,
                'title': "Quiz"}
     return render(request, 'polls/quiz.html', context)
@@ -84,7 +84,7 @@ def result_view(request, quiz_id):
     # get all the questions under a given quiz
     question = Question.objects.all().filter(quiz=quiz_id)
 
-    # q_a is a list of dictionary having all the information of the questions of the quiz 
+    # q_a is a list of dictionary having all the information of the questions of the quiz
     q_a = []
     for q in question:
         curr = {}
@@ -93,7 +93,7 @@ def result_view(request, quiz_id):
             question=q).get(user=request.user)
         curr['total'] = len(Question_answer.objects.all().filter(question=q))
         q_a.append(curr)
-        
+
     context = {'q_a': q_a, 'title': "Quiz results"}
     return render(request, "polls/results.html", context)
 
